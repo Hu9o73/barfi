@@ -63,6 +63,16 @@ class SchemaManager:
         with gzip.open(self._full_file_path, "wt", encoding="UTF-8") as handle_write:
             json.dump({k: v.export() for k, v in self._schemas.items()}, handle_write)
 
+    def list_schemas(self) -> list[str]:
+        """Retrieve the name of all stored schemas.
+
+        Returns:
+            list[str]: List of schema names.
+        """
+        schemas_list = self._read_file()
+        schemas_names = [schema for schema in schemas_list]
+        return schemas_names
+
     def save_schema(self, schema_name: str, flow_schema: FlowSchema):
         """Store a schema with the given name.
 
